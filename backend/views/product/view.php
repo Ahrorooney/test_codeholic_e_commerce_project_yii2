@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use yii\web\YiiAsset;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
@@ -9,7 +10,7 @@ use yii\widgets\DetailView;
 $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => 'Products', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
-\yii\web\YiiAsset::register($this);
+YiiAsset::register($this);
 ?>
 <div class="product-view">
 
@@ -30,15 +31,25 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
+            [
+                'attribute' => 'image',
+                'format' => 'html',
+                'value' => fn() => Html::img($model->getImageUrl(), ['style' => 'width: 50px']),
+            ],
             'name',
-            'description:ntext',
-            'image',
-            'price',
-            'status',
+            'description:html',
+            'price:currency',
+           [
+                   'attribute' => 'status',
+                   'format' => 'html',
+                   'value' => fn() => Html::tag('span', $model->status ? 'Active' : 'Draft',[
+                       'class' => $model->status ? 'badge badge-success' : 'badge badge-danger'
+                   ]),
+           ],
             'created_at',
             'updated_at',
-            'created_by',
-            'updated_by',
+            'created_by.username',
+            'updated_by.username',
         ],
     ]) ?>
 

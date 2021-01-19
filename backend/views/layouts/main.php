@@ -31,7 +31,7 @@ AppAsset::register($this);
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
         <!-- Sidebar - Brand -->
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
             <div class="sidebar-brand-text mx-3">Yii2 E-commerce</div>
         </a>
 
@@ -40,7 +40,7 @@ AppAsset::register($this);
 
         <!-- Nav Item - Dashboard -->
         <li class="nav-item active">
-            <a class="nav-link" href="index.html">
+            <a class="nav-link" href="/">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Dashboard</span></a>
         </li>
@@ -54,17 +54,12 @@ AppAsset::register($this);
                 <span>Products</span></a>
         </li>
 
-        <!-- Nav Item - Tables -->
-        <li class="nav-item">
-            <a class="nav-link" href="tables.html">
-                <i class="fas fa-fw fa-table"></i>
-                <span>Product categories</span></a>
-        </li>
+
 
         <!-- Divider -->
         <hr class="sidebar-divider d-none d-md-block">
 
-        <!-- Sidebar Toggler (Sidebar) -->
+        <!-- Sidebar Toggle (Sidebar) -->
         <div class="text-center d-none d-md-inline">
             <button class="rounded-circle border-0" id="sidebarToggle"></button>
         </div>
@@ -78,15 +73,15 @@ AppAsset::register($this);
         <!-- Main Content -->
         <div id="content">
 
-            <!-- Topbar -->
+            <!-- Top bar -->
             <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
-                <!-- Sidebar Toggle (Topbar) -->
+                <!-- Sidebar Toggle (Top bar) -->
                 <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                     <i class="fa fa-bars"></i>
                 </button>
 
-                <!-- Topbar Search -->
+                <!-- Top bar Search -->
                 <form
                         class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                     <div class="input-group">
@@ -100,7 +95,7 @@ AppAsset::register($this);
                     </div>
                 </form>
 
-                <!-- Topbar Navbar -->
+                <!-- Top bar Navbar -->
                 <ul class="navbar-nav ml-auto">
 
                     <!-- Nav Item - Search Dropdown (Visible Only XS) -->
@@ -194,7 +189,7 @@ AppAsset::register($this);
                             </h6>
                             <a class="dropdown-item d-flex align-items-center" href="#">
                                 <div class="dropdown-list-image mr-3">
-                                    <img class="rounded-circle" src="img/undraw_profile_1.svg"
+                                    <img class="rounded-circle" src="/img/undraw_profile_1.svg"
                                          alt="">
                                     <div class="status-indicator bg-success"></div>
                                 </div>
@@ -206,7 +201,7 @@ AppAsset::register($this);
                             </a>
                             <a class="dropdown-item d-flex align-items-center" href="#">
                                 <div class="dropdown-list-image mr-3">
-                                    <img class="rounded-circle" src="img/undraw_profile_2.svg"
+                                    <img class="rounded-circle" src="/img/undraw_profile_2.svg"
                                          alt="">
                                     <div class="status-indicator"></div>
                                 </div>
@@ -218,7 +213,7 @@ AppAsset::register($this);
                             </a>
                             <a class="dropdown-item d-flex align-items-center" href="#">
                                 <div class="dropdown-list-image mr-3">
-                                    <img class="rounded-circle" src="img/undraw_profile_3.svg"
+                                    <img class="rounded-circle" src="/img/undraw_profile_3.svg"
                                          alt="">
                                     <div class="status-indicator bg-warning"></div>
                                 </div>
@@ -252,7 +247,7 @@ AppAsset::register($this);
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo Yii::$app->user->identity->getDisplayName(); ?></span>
                             <img class="img-profile rounded-circle"
-                                 src="img/undraw_profile.svg">
+                                 src="/img/undraw_profile.svg" alt="">
                         </a>
                         <!-- Dropdown - User Information -->
                         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
