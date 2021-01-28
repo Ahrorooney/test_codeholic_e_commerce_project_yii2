@@ -1,5 +1,8 @@
 <?php
 /** @var \common\models\Product $model */
+
+use yii\helpers\Url;
+
 ?>
 <div class="card h-100">
     <a href="#">
@@ -15,7 +18,7 @@
         </div>
     </div>
     <div class="card-footer text text-right">
-        <a href="#" class="btn btn-primary">
+        <a href="<?php echo Url::to(['/cart/add']) ?>" class="btn btn-primary btn-add-to-cart">
             Add to Cart
         </a>
     </div>
