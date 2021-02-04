@@ -10,6 +10,7 @@
 
 use common\models\Order;
 use common\models\OrderAddress;
+use common\models\Product;
 use yii\bootstrap4\ActiveForm;
 
 ?>
@@ -57,9 +58,39 @@ use yii\bootstrap4\ActiveForm;
                 <h5>Order summary</h5>
             </div>
             <div class="card-body">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>Image</th>
+                    <th>Name</th>
+                    <th>Quantity</th>
+                    <th>Total Price</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                <?php foreach($cartItems as $item) : ?>
+                    <tr>
+                        <td>
+                            <img src="<?php echo Product::formatImageUrl($item['image']) ?>"
+                                 alt="<?php echo $item['name'] ?>"
+                                 style="width:50px;"
+                            >
+                        </td>
+                        <td><?php echo $item['name'] ?></td>
+                        <td>
+                            <?php echo $item['quantity'] ?>
+                        </td>
+                        <td><?php echo Yii::$app->formatter->asCurrency($item['total_price']) ?></td>
+                    </tr>
+                <?php endforeach; ?>
+                </tbody>
+            </table>
+                <hr>
                 <table class="table">
                     <tr>
-                        <td colspan="2"><?php echo $productQuantity ?> Products</td>
+                        <td>Total items</td>
+                        <td class="text-right"><?php echo $productQuantity ?> Quantity</td>
                     </tr>
                     <tr>
                         <td>Total Price</td>
