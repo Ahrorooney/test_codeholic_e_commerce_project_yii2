@@ -50,11 +50,15 @@ AppAsset::register($this);
         <!-- Nav Item - Charts -->
         <li class="nav-item">
             <a class="nav-link" href="<?php echo Url::to(['/product/index'])?>">
-                <i class="fas fa-fw fa-chart-area"></i>
+                <i class="fas fa-fw fa-list"></i>
                 <span>Products</span></a>
         </li>
 
-
+        <li class="nav-item">
+            <a class="nav-link" href="<?php echo Url::to(['/order/index'])?>">
+                <i class="fas fa-fw fa-money-check-alt"></i>
+                <span>Orders</span></a>
+        </li>
 
         <!-- Divider -->
         <hr class="sidebar-divider d-none d-md-block">
