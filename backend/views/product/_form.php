@@ -19,7 +19,7 @@ use yii\bootstrap4\ActiveForm;
 
     <?= $form->field($model, 'description')->widget(CKEditor::class, [
         'options' => ['rows' => 6],
-        'preset' => 'basic'
+        'preset' => 'full'
     ]) ?>
 
     <?= $form->field($model, 'imageFile', [

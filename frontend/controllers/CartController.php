@@ -12,6 +12,8 @@ use common\models\User;
 use Yii;
 use yii\filters\ContentNegotiator;
 use yii\filters\VerbFilter;
+use yii\helpers\VarDumper;
+use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
@@ -23,7 +25,7 @@ class CartController extends \frontend\base\Controller
         return [
             [
                 'class' => ContentNegotiator::class,
-                'only' => ['add'],
+                'only' => ['add', 'create-order', 'submit-payment'],
                 'formats' => [
                     'application/json' => Response::FORMAT_JSON,
                 ]
@@ -39,11 +41,7 @@ class CartController extends \frontend\base\Controller
 
     public function actionIndex()
     {
-        if (Yii::$app->user->isGuest) {
-            $cartItems = Yii::$app->session->get(CartItem::SESSION_KEY, []);
-        } else {
-            $cartItems = CartItem::getItemsForUser(currUserId());
-        }
+        $cartItems = CartItem::getItemsForUser(currUserId());
 
         return $this->render('index', [
             'items' => $cartItems
@@ -52,7 +50,7 @@ class CartController extends \frontend\base\Controller
 
     public function actionAdd()
     {
-      $id= Yii::$app->request->post('id');
+      $id = Yii::$app->request->post('id');
       $product = Product::find()->id($id)->published()->one();
       if (!$product) {
           throw new NotFoundHttpException('Product does not exist!');
@@ -157,7 +155,33 @@ class CartController extends \frontend\base\Controller
 
     public function actionCheckout()
     {
+        $cartItems = CartItem::getItemsForUser(currUserId());
+        $productQuantity = CartItem::getTotalQuantityForUser(currUserId());
+        $totalPrice = CartItem::getTotalPriceForUser(currUserId());
+
+        if (empty($cartItems)) {
+            return $this->redirect([Yii::$app->homeUrl]);
+        }
         $order = new Order();
+
+        $order->total_price = $totalPrice;
+        $order->status = Order::STATUS_DRAFT;
+        $order->created_at = time();
+        $order->created_by = currUserId();
+        $transaction = Yii::$app->db->beginTransaction();
+        if ($order->load(Yii::$app->request->post())
+            && $order->save()
+            && $order->saveAddress(Yii::$app->request->post())
+            && $order->saveOrderItems()) {
+            $transaction->commit();
+
+            CartItem::clearCartItems(currUserId());
+
+            return $this->render('pay-now', [
+                'order' => $order,
+            ]);
+        }
+
         $orderAddress = new OrderAddress();
         if (!isGuest()) {
             /** @var User $user */
@@ -174,13 +198,8 @@ class CartController extends \frontend\base\Controller
             $orderAddress->state = $userAddress->state;
             $orderAddress->country = $userAddress->country;
             $orderAddress->zipcode = $userAddress->zipcode;
-            $cartItems = CartItem::getItemsForUser(currUserId());
-        } else {
-            $cartItems = Yii::$app->session->get(CartItem::SESSION_KEY, []);
         }
 
-        $productQuantity = CartItem::getTotalQuantityForUser(currUserId());
-        $totalPrice = CartItem::getTotalPriceForUser(currUserId());
 
         return $this->render('checkout', [
             'order' => $order,
@@ -189,5 +208,44 @@ class CartController extends \frontend\base\Controller
             'productQuantity' => $productQuantity,
             'totalPrice' => $totalPrice
         ]);
+    }
+
+    public function actionSubmitPayment($orderId)
+    {
+        $where = ['id' => $orderId, 'status'=> Order::STATUS_DRAFT];
+
+        if (!isGuest()) {
+           $where['created_by'] = currUserId();
+        }
+
+        $order = Order::findOne($where);
+        if (!$order) {
+            throw new NotFoundHttpException();
+        }
+        $order->transaction_id = Yii::$app->request->post('transaction_id');
+        $exists = Order::find()->andWhere(['transaction_id' => $order->transaction_id])->exists();
+        if ($exists) {
+            throw new BadRequestHttpException();
+        }
+
+        $status = Yii::$app->request->post('status');
+        $order->status = $status === "COMPLETED" ? Order::STATUS_COMPLETED : Order::STATUS_FAILURED;
+
+        if ($order->save()) {
+            if ( !$order->sendEmailByVendor()) {
+                Yii::error("Email to the vendor is not sent");
+            }
+            if (!$order->sendEmailToCustomer()) {
+                Yii::error("Email to the customer is not sent");
+            }
+            return [
+              'success' => true,
+            ];
+        } else {
+            Yii::error("Order was not saved. Data: ".VarDumper::dumpAsString($order->toArray()).
+                '.Errors: '.VarDumper::dumpAsString($order->errors));
+        }
+
+        throw new BadRequestHttpException();
     }
 }
