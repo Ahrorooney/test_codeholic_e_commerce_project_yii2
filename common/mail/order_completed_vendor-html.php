@@ -10,6 +10,14 @@ $orderAddress = $order->orderAddress;
     Order #<?php echo $order->id ?> summary:
 </h3>
 <hr>
+<style>
+    .row{
+        display:flex;
+    }
+    .col{
+        flex:1;
+    }
+</style>
 <div class="row">
     <div class="col">
         <h5>Account information</h5>
