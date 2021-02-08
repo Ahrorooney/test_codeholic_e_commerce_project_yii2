@@ -1,6 +1,7 @@
 <?php
 namespace frontend\controllers;
 
+use common\models\Order;
 use common\models\Product;
 use common\models\User;
 use common\models\UserAddresses;

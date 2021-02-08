@@ -26,7 +26,7 @@ class Order extends \yii\db\ActiveRecord
 {
     const STATUS_DRAFT = 0;
     const STATUS_COMPLETED = 1;
-    const STATUS_FAILURED = 1;
+    const STATUS_FAILURED = 2;
     /**
      * {@inheritdoc}
      */
@@ -43,6 +43,7 @@ class Order extends \yii\db\ActiveRecord
         return [
             [['total_price', 'status', 'firstname', 'lastname', 'email'], 'required'],
             [['total_price'], 'number'],
+            [['email'], 'email'],
             [['status', 'created_at', 'created_by'], 'integer'],
             [['firstname', 'lastname'], 'string', 'max' => 45],
             [['email', 'transaction_id'], 'string', 'max' => 255],
