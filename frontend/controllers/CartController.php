@@ -232,7 +232,7 @@ class CartController extends \frontend\base\Controller
         }
 
         $status = Yii::$app->request->post('status');
-        $order->status = $status === "COMPLETED" ? Order::STATUS_COMPLETED : Order::STATUS_FAILURED;
+        $order->status = $status === "COMPLETED" ? Order::STATUS_PAID : Order::STATUS_FAILED;
 
         if ($order->save()) {
             if ( !$order->sendEmailByVendor()) {

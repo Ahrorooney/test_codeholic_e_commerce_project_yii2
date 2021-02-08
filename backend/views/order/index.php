@@ -1,6 +1,7 @@
 <?php
 
-use yii\helpers\Html;
+use common\models\Order;
+use yii\bootstrap4\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
@@ -41,7 +42,14 @@ $this->params['breadcrumbs'][] = $this->title;
             'total_price:currency',
             //'email:email',
             //'transaction_id',
-            'status:orderStatus',
+            [
+               'attribute' => 'status',
+                'filter' => Html::activeDropDownList($searchModel, 'status', Order::getStatusLabels(),[
+                        'class' => 'form-control',
+                    'prompt' => 'All'
+                ]),
+                'format' => ['orderStatus']
+            ],
             'created_at:datetime',
             //'created_by',
 
