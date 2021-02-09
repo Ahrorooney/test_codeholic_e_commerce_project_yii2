@@ -41,6 +41,7 @@ return [
             'errorAction' => 'site/error',
         ],
         'assetManager' => [
+            'appendTimestamp' => true,
             'bundles' => [
                 BootstrapAsset::class=> false
             ]
