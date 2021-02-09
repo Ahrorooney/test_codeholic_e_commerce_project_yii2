@@ -12,7 +12,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="product-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h3><?= Html::encode($this->title) ?></h3>
 
     <p>
         <?= Html::a('Create Product', ['create'], ['class' => 'btn btn-success']) ?>
@@ -20,51 +20,63 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            [
+    <div class="table-responsive">
+        <?= GridView::widget([
+            'dataProvider' => $dataProvider,
+            'filterModel' => $searchModel,
+            'columns' => [
+                [
                     'attribute' => 'id',
-                'contentOptions' => [
+                    'contentOptions' => [
                         'style' => 'width: 60px'
-                ]
-            ],
-            [
+                    ]
+                ],
+                [
                     'label' => 'Image',
-                'attribute' => 'image',
-                'content' => function($model) {
-                    /** @var $model \common\models\Product */
-                    return Html::img($model->getImageUrl(), ['style' => 'width: 50px']);
-                }
-            ],
-            'name',
-            'price:currency',
-            [
+                    'attribute' => 'image',
+                    'content' => function($model) {
+                        /** @var $model \common\models\Product */
+                        return Html::img($model->getImageUrl(), ['style' => 'width: 50px']);
+                    }
+                ],
+                [
+                    'attribute' => 'name',
+                    'content' => function($model) {
+                        return \yii\helpers\StringHelper::truncateWords($model->name, 7);
+                    }
+                ],
+                'price:currency',
+                [
                     'attribute' => 'status',
-                'content' => function($model) {
-                    /** @var $model \common\models\Product */
-                    return Html::tag('span', $model->status ? 'Active' : 'Draft',[
+                    'content' => function($model) {
+                        /** @var $model \common\models\Product */
+                        return Html::tag('span', $model->status ? 'Active' : 'Draft',[
                             'class' => $model->status ? 'badge badge-success' : 'badge badge-danger'
-                    ]);
-                }
-            ],
-            [
+                        ]);
+                    }
+                ],
+                [
                     'attribute' => 'created_at',
-                'format' => ['datetime'],
-                'contentOptions' => ['style' => 'white-space: nowrap']
-            ],
-            [
-                'attribute' => 'updated_at',
-                'format' => ['datetime'],
-                'contentOptions' => ['style' => 'white-space: nowrap']
-            ],
-            //'created_by',
-            //'updated_by',
+                    'format' => ['datetime'],
+                    'contentOptions' => ['style' => 'white-space: nowrap']
+                ],
+                [
+                    'attribute' => 'updated_at',
+                    'format' => ['datetime'],
+                    'contentOptions' => ['style' => 'white-space: nowrap']
+                ],
+                //'created_by',
+                //'updated_by',
 
-            ['class' => 'common\grid\ActionColumn'],
-        ],
-    ]); ?>
+                [
+                    'class' => 'common\grid\ActionColumn',
+                    'contentOptions' => [
+                            'class' => 'td-actions'
+                    ]
+                ],
+            ],
+        ]); ?>
+    </div>
 
 
 </div>
