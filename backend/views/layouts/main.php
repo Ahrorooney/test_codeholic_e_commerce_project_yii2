@@ -134,10 +134,15 @@ AppAsset::register($this);
         <!-- End of Main Content -->
 
         <!-- Footer -->
-        <footer class="sticky-footer bg-white">
-            <div class="container my-auto">
-                <div class="copyright text-center my-auto">
-                    <span>Copyright &copy; Your Website 2020</span>
+        <footer class="footer">
+            <div class="container">
+                <div class="row copyright">
+                    <div class="col">
+                        <div class="pull-left">&copy; <?= Html::encode(Yii::$app->name) ?> <?= date('Y') ?></div>
+                    </div>
+                    <div class="col text-right">
+                        <div class="pull-right">Created by <a href="https://youtube.com/TheCodeholic" target="_blank">TheCodeholic</a></div>
+                    </div>
                 </div>
             </div>
         </footer>
