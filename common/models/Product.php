@@ -195,4 +195,5 @@ class Product extends ActiveRecord
         }
         FileHelper::removeDirectory($dir);
     }
+
 }
