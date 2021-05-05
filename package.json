@@ -1,0 +1,30 @@
+{
+  "name": "yii2-ecommerce",
+  "version": "1.0.0",
+  "description": "Open Source Yi2 ecommerce website ",
+  "main": "index.js",
+  "scripts": {
+    "start": "npx webpack",
+    "build": "npx webpack --config webpack.config-prod.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ahrorooney/test_codeholic_e_commerce_project_yii2.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ahrorooney/test_codeholic_e_commerce_project_yii2/issues"
+  },
+  "homepage": "https://github.com/Ahrorooney/test_codeholic_e_commerce_project_yii2#readme",
+  "devDependencies": {
+    "css-loader": "^5.2.4",
+    "mini-css-extract-plugin": "^1.6.0",
+    "sass": "^1.32.12",
+    "sass-loader": "^11.0.1",
+    "style-loader": "^2.0.0",
+    "webpack": "^5.36.2",
+    "webpack-cli": "^4.6.0"
+  }
+}

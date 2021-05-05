@@ -1,3 +1,8 @@
+/******/ (() => { // webpackBootstrap
+var __webpack_exports__ = {};
+/*!****************************!*\
+  !*** ./frontend/js/app.js ***!
+  \****************************/
 $(function(){
     const $cartQuantity = $('#cart-quantity');
     const $addToCart = $('.btn-add-to-cart');
@@ -40,7 +45,8 @@ $(function(){
     $checkWalletBalance.click(ev => {
         ev.preventDefault();
         const $this = $(ev.target);
-        let $url = 'http://online-bank.test/wallet/my-balance?username='+$balanceUsername.text()+'&password='+$balancePassword.val();
+        // let $url = 'http://online-bank.test/wallet/my-balance?username='+$balanceUsername.text()+'&password='+$balancePassword.val();
+        let $url = 'http://distributor-pharmacy.test/v1/api/catalogue-medicine';
         $.ajax({
             method: 'get',
             url: $url,
@@ -87,3 +93,6 @@ $(function(){
         })
     }
 });
+/******/ })()
+;
+//# sourceMappingURL=app.js.map
